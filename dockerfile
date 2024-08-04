@@ -1,20 +1,9 @@
-# use the official python image
-FROM python:3.11-slim
-
-# set the working directory inside container
-WORKDIR /app
-
-# copy the requirement file to the working directory
+FROM public.ecr.aws/lambda/python:3.10
+# Copy function code
+COPY ./app ${LAMBDA_TASK_ROOT}
+# Install the function's dependencies using file requirements.txt
+# from your project folder.
 COPY requirements.txt .
-
-# Install the python dependencies
-RUN pip install -r requirements.txt
-
-# copy the application code to the working directory
-COPY . .
-
-# Expose the port on which application will run
-EXPOSE 8080
-
-# Run the application using uvicorn server
-CMD ["fastapi", "dev", "main.py"]
+RUN pip3 install -r requirements.txt - target "${LAMBDA_TASK_ROOT}" -U - no-cache-dir
+# Set the CMD to your handler (could also be done as a parameter override outside of the Dockerfile)
+CMD [ "app.handler" ]
