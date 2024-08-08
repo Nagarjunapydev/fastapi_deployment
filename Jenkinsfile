@@ -15,3 +15,5 @@ pipeline {
                 sh "docker build -t todo-list-app ."
             }
         }
+    }
+   }
