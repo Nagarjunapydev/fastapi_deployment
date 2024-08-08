@@ -1,7 +1,6 @@
 # use the official python image
 FROM python:3.11-slim
 
-# set the working directory inside container
 WORKDIR /app
 
 # copy the requirement file to the working directory
